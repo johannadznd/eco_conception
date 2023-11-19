@@ -1,0 +1,57 @@
+body {
+  font-family: "Nunito", sans-serif;
+}
+
+h1 {
+  font-family: "Kanit", sans-serif;
+}
+
+h2 {
+  font-family: "Titillium Web", sans-serif;
+}
+
+.flex {
+  display: flex;
+}
+
+.wrap {
+  flex-wrap: wrap;
+}
+
+.center {
+  justify-content: center;
+}
+
+.start {
+  justify-content: start;
+}
+
+.end {
+  justify-content: end;
+}
+
+.space_around {
+  justify-content: space-around;
+}
+
+.space_between {
+  justify-content: space-between;
+}
+
+.text_center {
+  text-align: center;
+}
+
+.text_right {
+  text-align: right;
+}
+
+.text_left {
+  text-align: left;
+}
+
+table,
+td,
+th {
+  border: 1px solid #333;
+}
