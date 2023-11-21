@@ -13,15 +13,11 @@ $pdo = getPdo();
         width: 350px;
     }
 
-    body {
-        margin: 0;
-        font-family: Arial, sans-serif;
-    }
-
     .carousel-container {
-        width: 40%;
+        width: 100%;
         margin: auto;
         overflow: hidden;
+        height: 45vw;
     }
 
     .carousel {

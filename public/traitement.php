@@ -28,3 +28,5 @@ foreach ($clients as $key => $client) {
         echo "Erreur de mise à jour du client  $client->name : " . $reponse  . "<br>";
     }
 }
+
+require_once '../views/layout/footer.php';
