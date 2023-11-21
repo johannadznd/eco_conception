@@ -9,21 +9,21 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Aldrich&family=Nunito:wght@300&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@1,200&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Sen&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Titillium+Web&display=swap" rel="stylesheet">
 
     <style>
         header {
-            margin-bottom: 10px;
+            background: black;
         }
 
         a {
-            color: black;
+            color: white;
             text-decoration: none;
         }
     </style>
 </head>
-<header class="flex center">
+<header class="flex left">
     <h1><a href="/">
             Site non éco conçu
         </a>
