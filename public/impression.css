@@ -1,0 +1,19 @@
+/* Masquer les éléments spécifiques */
+footer,
+.carousel-container,
+.update-client,
+.pagination,
+.img {
+  display: none;
+}
+
+/* Styles spécifiques pour les clients */
+.clients {
+  width: 40%;
+  height: 15vh;
+}
+
+/* Gérer le débordement dans les paragraphes */
+p {
+  overflow: hidden;
+}
