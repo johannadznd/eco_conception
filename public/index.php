@@ -4,74 +4,40 @@ require_once '../fonctions/pdo.php';
 $pdo = getPdo();
 
 ?>
-<style>
-    .clients {
-        border: solid 1px;
-        padding: 5px;
-        border-radius: 4px;
-        margin: 20px;
-        width: 350px;
-    }
-
-    .carousel-container {
-        width: 100%;
-        margin: auto;
-        overflow: hidden;
-        height: 45vw;
-    }
-
-    .carousel {
-        display: flex;
-        transition: transform 0.5s ease-in-out;
-    }
-
-    .carousel img {
-        width: 100%;
-        height: auto;
-    }
-
-    h2 {
-        margin: 15px;
-    }
-
-    .btn {
-        border: 1px solid;
-        background: none;
-        padding: 8px;
-        border-radius: 3px;
-    }
-</style>
-
-<?php
-$photos = array("/images/img1.jpg", "/images/img2.jpg", "/images/img3.jpg");
-?>
 
 <div class="carousel-container">
     <div class="carousel">
-        <?php
-        foreach ($photos as $photo) {
-            echo '<img src="' . $photo . '" alt="Image">';
-        }
-        ?>
+        <!-- Gestion des media on utilise srcset et lazy loading-->
+        <img src="/images/img1.jpg" srcset="/images/img1_1200.jpg 1200w, /images/img1_750.jpg 750w, /images/img1_500.jpg 500w" loading="lazy" alt="Image">
     </div>
 </div>
-
 <div>
     <h2 class="text_center">Liste des clients</h2>
 
-    <form action="traitement.php" method="post" class="flex center">
+    <form action="traitement.php" method="post" class="flex center update-client">
         <input class="btn" type="submit" name="update_clients" value="Mettre à jour les clients">
     </form>
 
     <?php
-    $sqlGetClients = "SELECT * FROM clients";
+    // Définir le nombre d'éléments par page
+    $elementsParPage = 24; // Vous pouvez ajuster cela en fonction de vos besoins
+
+    // Récupérer le numéro de la page actuelle à partir de la requête GET
+    $page = isset($_GET['page']) ? $_GET['page'] : 1;
+
+    // Calculer le point de départ pour la requête SQL en fonction de la page actuelle
+    $pointDeDepart = ($page - 1) * $elementsParPage;
+
+    // Requête SQL modifiée avec la limitation et le décalage pour la pagination
+    $sqlGetClients = "SELECT * FROM clients LIMIT $pointDeDepart, $elementsParPage";
 
     $rstGetClients = $pdo->query($sqlGetClients);
     $clients = $rstGetClients->fetchAll(PDO::FETCH_OBJ);
 
     ?>
-    <div class="flex space_around wrap">
 
+    <!-- On affiche les infos des clients -->
+    <div class="flex space_around wrap">
         <?php
         foreach ($clients as $key => $client) {
         ?>
@@ -86,33 +52,51 @@ $photos = array("/images/img1.jpg", "/images/img2.jpg", "/images/img3.jpg");
         ?>
     </div>
 
-</div>
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
+    <!-- Ajouter la pagination -->
+    <div class="flex center m15">
+        <div class="pagination">
+            <?php
+            // Requête pour compter le nombre total de clients
+            $sqlCountClients = "SELECT COUNT(*) as total FROM clients";
+            $rstCountClients = $pdo->query($sqlCountClients);
+            $resultCountClients = $rstCountClients->fetch(PDO::FETCH_ASSOC);
 
-        let carousel = document.querySelector(".carousel");
-        let currentIndex = 0;
-        let totalItems = <?php echo count($photos); ?>;
+            // Calculer le nombre total de pages
+            $nombreDePages = ceil($resultCountClients['total'] / $elementsParPage);
 
-        function showImage(index) {
-            if (index < 0) {
-                currentIndex = totalItems - 1;
-            } else if (index >= totalItems) {
-                currentIndex = 0;
-            } else {
-                currentIndex = index;
+            // Afficher la flèche "Précédent" s'il y a une page précédente
+            if ($page > 3) {
+                echo '<a class="pagination-number" href="?page=' . ($page - 1) . '"> < Précédent</a> ';
+                echo '<a class="pagination-number" href="?page=1">1</a> ';
             }
 
-            let newTransformValue = -currentIndex * 100 + "%";
-            carousel.style.transform = "translateX(" + newTransformValue + ")";
-        }
+            // Afficher les liens de pagination
+            for ($i = max(1, $page - 2); $i <= min($page + 2, $nombreDePages); $i++) {
 
-        // Auto-play the carousel
-        setInterval(function() {
-            currentIndex++;
-            showImage(currentIndex);
-        }, 3000);
-    });
-</script>
+                $active = "";
+
+                if ($page == $i) {
+                    $active = "active";
+                }
+                echo '<a class="pagination-number ' . $active . '" href="?page=' . $i . '">' . $i . '</a> ';
+            }
+
+            // Afficher la flèche "Suivant" s'il y a une page suivante
+            if ($page < $nombreDePages) {
+                echo '<a class="pagination-number" href="?page=' . $nombreDePages . '">' . $nombreDePages . '</a> ';
+                echo '<a class="pagination-number" href="?page=' . ($page + 1) . '">Suivante ></a> ';
+            }
+            ?>
+        </div>
+    </div>
+</div>
+
+<div class="flex center p15">
+    <!-- Gestion des media on utilise srcset et lazy loading-->
+    <img src="/images/img2.jpg" srcset="/images/img2_750.jpg 750w, /images/img2_500.jpg 500w" loading="lazy" alt="Image" class="img">
+
+</div>
+
+</div>
 <?php
 require_once '../views/layout/footer.php';
