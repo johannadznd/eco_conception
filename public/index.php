@@ -56,6 +56,11 @@ $photos = array("/images/img1.jpg", "/images/img2.jpg", "/images/img3.jpg");
     </div>
 </div>
 
+<div class="text_center" id="counter">0</div>
+<div class="flex center">
+    <button class="btn" id="incrementBtn">Incrémenter</button>
+</div>
+
 <div>
     <h2 class="text_center">Liste des clients</h2>
 
@@ -88,9 +93,9 @@ $photos = array("/images/img1.jpg", "/images/img2.jpg", "/images/img3.jpg");
 
 </div>
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
+    $(document).ready(function() {
 
-        let carousel = document.querySelector(".carousel");
+        let carousel = $(".carousel");
         let currentIndex = 0;
         let totalItems = <?php echo count($photos); ?>;
 
@@ -104,7 +109,7 @@ $photos = array("/images/img1.jpg", "/images/img2.jpg", "/images/img3.jpg");
             }
 
             let newTransformValue = -currentIndex * 100 + "%";
-            carousel.style.transform = "translateX(" + newTransformValue + ")";
+            carousel.css("transform", "translateX(" + newTransformValue + ")");
         }
 
         // Auto-play the carousel
@@ -112,6 +117,28 @@ $photos = array("/images/img1.jpg", "/images/img2.jpg", "/images/img3.jpg");
             currentIndex++;
             showImage(currentIndex);
         }, 3000);
+
+
+        // Initialiser le compteur à 0
+        let counterValue = 0;
+
+        // Mettre à jour le contenu du compteur dans l'élément avec l'ID "counter"
+        function updateCounter() {
+            $("#counter").text(counterValue);
+        }
+
+        // Gérer le clic sur le bouton d'incrémentation
+        $("#incrementBtn").on("click", function() {
+            // Incrémenter la valeur du compteur
+            counterValue++;
+            // Mettre à jour l'affichage
+            updateCounter();
+        });
+
+        // Appel initial pour afficher la valeur initiale
+        updateCounter();
+
+
     });
 </script>
 <?php
