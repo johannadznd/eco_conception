@@ -11,6 +11,12 @@ $pdo = getPdo();
         <img src="/images/img1.jpg" srcset="/images/img1_1200.jpg 1200w, /images/img1_750.jpg 750w, /images/img1_500.jpg 500w" loading="lazy" alt="Image">
     </div>
 </div>
+
+<div class="text_center" id="counter">0</div>
+<div class="flex center">
+    <button class="btn" id="incrementBtn">Incrémenter</button>
+</div>
+
 <div>
     <h2 class="text_center">Liste des clients</h2>
 
@@ -91,10 +97,9 @@ $pdo = getPdo();
     </div>
 </div>
 
-<div class="flex center p15">
+<div class="flex center p15 img_container">
     <!-- Gestion des media on utilise srcset et lazy loading-->
     <img src="/images/img2.jpg" srcset="/images/img2_750.jpg 750w, /images/img2_500.jpg 500w" loading="lazy" alt="Image" class="img">
-
 </div>
 
 </div>
